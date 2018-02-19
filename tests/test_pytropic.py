@@ -18,5 +18,5 @@ class TestPytropic(unittest.TestCase):
     def tearDown(self):
         """Tear down test fixtures, if any."""
 
-    def test_000_something(self):
-        """Test something."""
+    def test_sliding(self):
+        assert(list(pytropic.sliding("test", 2)) == ['te', 'es', 'st'])
