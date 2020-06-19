@@ -90,6 +90,19 @@ class Model(object):
             except ValueError as err:
                 warnings.warn("Invalid line at {}. Error: {}".format(n, err))
 
+    def read_from_string(self, string):
+        n = 0
+        for line in string.split('\n'):
+            n += 1
+            try:
+                _, ngram, count = line.strip().split("\t")
+                count = float(count)
+                self.counter[ngram] += count
+                self.total += count
+            except ValueError as err:
+                warnings.warn("Invalid line at {}. Error: {}".format(n, err))
+
+
     def train(self, io):
         for line in io:
             self.update(line.strip())
