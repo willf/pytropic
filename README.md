@@ -4,9 +4,6 @@
 
 Train and predict string entropy based on character n-grams
 
--   Free software: MIT license
--   Documentation: https://pytropic.readthedocs.io.
-
 ## Features
 
 -   Train a model on a corpus of text
