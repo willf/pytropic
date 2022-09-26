@@ -22,6 +22,9 @@ class Model(object):
         self.total = 0
         self.name = name
 
+    def __repr__(self):
+        return "<Model {}>".format(self.name)
+
     def update(self, string, muliplier=1):
         """
         Public: update a counter with a string, and a multiplier
