@@ -29,7 +29,7 @@ Train and predict string entropy based on character n-grams
 >>> t = {'en': en, 'fr': fr}
 
 >>> min(t, key=lambda x: t[x].entropy("this is a test"))
-Out: 'en
+Out: 'en'
 
 >>> min(t, key=lambda x: t[x].entropy("c'est un test"))
 Out: 'fr'
