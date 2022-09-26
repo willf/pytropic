@@ -158,7 +158,6 @@ def read_models_from_json(
         count = data[count_key]
         model_name = data[model_name_key]
         ngram_size = data[ngram_size_key]
-        size = data["size"]
         if model_name not in models:
             models[model_name] = Model(size=ngram_size, name=model_name)
         model = models[model_name]

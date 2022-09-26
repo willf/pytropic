@@ -7,7 +7,6 @@
 import tempfile
 import unittest
 import os
-import tempfile
 from pytropic import pytropic
 
 
