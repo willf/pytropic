@@ -2,17 +2,7 @@
 Pytropic
 ========
 
-![CI](https://github.com/willf/pytropic/workflows/workflow.yml/badge.svg)
-
-.. image:: https://img.shields.io/pypi/v/pytropic.svg
-:target: https://pypi.python.org/pypi/pytropic
-
-.. image:: https://img.shields.io/travis/willf/pytropic.svg
-:target: https://travis-ci.org/willf/pytropic
-
-.. image:: https://readthedocs.org/projects/pytropic/badge/?version=latest
-:target: https://pytropic.readthedocs.io/en/latest/?badge=latest
-:alt: Documentation Status
+![CI](https://github.com/willf/pytropic/.github/workflows/workflow.yml/badge.svg)
 
 Train and predict string entropy based on character n-grams
 
