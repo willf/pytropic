@@ -2,10 +2,7 @@
 
 [![Python package](https://github.com/willf/pytropic/actions/workflows/test.yml/badge.svg)](https://github.com/willf/pytropic/actions/workflows/test.yml)
 
-
 <img alt="An python with a lot of entropy" src="https://user-images.githubusercontent.com/37049/192400489-7a2fdc49-b29a-4299-a1c6-97c8b97b2eaf.png" width=150>
-
-
 
 Train and predict string entropy based on character n-grams
 
