@@ -64,3 +64,4 @@ class TestPytropic(unittest.TestCase):
         with open(fr_path) as f:
             fr.read_json(f)
         assert fr.entropy("poisson") < fr.entropy("fish")
+        
