@@ -65,5 +65,3 @@ class TestPytropic(unittest.TestCase):
             fr.read_json(f)
         assert fr.entropy("poisson") < fr.entropy("fish")
         
-    def test_failure(self):
-        assert false
