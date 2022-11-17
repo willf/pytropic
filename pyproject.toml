@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "pytropic"
+version = "0.2.0"
+description = "Train and predict string entropy based on character n-grams"
+authors = ["Will Fitzgerald <37049+willf@users.noreply.github.com>"]
+license = "MIT License"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
