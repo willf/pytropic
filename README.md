@@ -8,9 +8,9 @@ Train and predict string entropy based on character n-grams
 
 ## Features
 
--   Train a model on a corpus of text
--   multiple n-gram sizes
--   Can name models
+- Train a model on a corpus of text
+- multiple n-gram sizes
+- Can name models
 
 ## Example
 
