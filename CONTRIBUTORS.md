@@ -1,13 +1,9 @@
-=======
-Credits
-=======
+# Credits
 
-Development Lead
-----------------
+## Development Lead
 
-* Will Fitzgerald <will.fitzgerald@gmail.com>
+-   Will Fitzgerald <will.fitzgerald@gmail.com>
 
-Contributors
-------------
+## Contributors
 
 None yet. Why not be the first?
