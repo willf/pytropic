@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import collections
+import json
 import math
 import warnings
-import json
 
 """Main module."""
 
@@ -146,23 +146,139 @@ class Model(object):
                 warnings.warn("Invalid line at {}. Error: {}".format(n, err))
 
 
-def read_models_from_json(
-    io,
-    count_key="count",
-    ngram_key="ngram",
-    model_name_key="model_name",
-    ngram_size_key="ngram_size",
-    ngram_size=None,
-):
-    models = {}
-    for line in io:
-        data = json.load(line.strip())
-        ngram = data[ngram_key]
-        count = data[count_key]
-        model_name = data[model_name_key]
-        ngram_size = data[ngram_size_key]
-        if model_name not in models:
-            models[model_name] = Model(size=ngram_size, name=model_name)
-        model = models[model_name]
-        model.update(ngram, count)
-    return models
+class MultiModel(object):
+    """A collection of models"""
+
+    def __init__(self, models={}):
+        self.models = models
+
+    def __repr__(self):
+        return "<MultiModel({} models)>".format(len(self.models))
+
+    def read_json(
+        self,
+        io,
+        count_key="count",
+        ngram_key="ngram",
+        model_name_key="model_name",
+        ngram_size_key="ngram_size",
+        ngram_size=None,
+    ):
+        """
+        Public: read a json file into a MultiModel
+
+        The file should be a jsonl file, with each line containing a json object with the following
+        keys:
+            count: the count of the ngram
+            ngram: the ngram
+            model_name: the name of the model
+            ngram_size: the size of the ngram
+
+        This will create a model for each model_name found in the file, and add the ngram data for that model.
+
+        io: The IO object to read from
+        count_key: The String key for the count
+        ngram_key: The String key for the ngram
+        model_name_key: The String key for the model name
+        ngram_size_key: The String key for the ngram size
+        ngram_size: The Integer size of the ngrams. If not provided, will be inferred from the data
+
+        Returns: A MultiModel object
+
+        Notes: This is additive,it will not overwrite, but will change, existing data in the MultiModel
+
+
+        """
+        models = {}
+        for line in io:
+            data = json.loads(line.strip())
+            ngram = data[ngram_key]
+            count = data[count_key]
+            model_name = data[model_name_key]
+            ngram_size = data[ngram_size_key]
+            if model_name not in models:
+                models[model_name] = Model(size=ngram_size, name=model_name)
+            model = models[model_name]
+            model.update(ngram, count)
+        self.models = models
+
+    def predict(self, string):
+        """
+        Public: Returns a sorted list of predictions for the string
+
+        string: The String to predict
+
+        Returns: A list of tuples of the form (model_name, prediction), sorted by the prediction's log_prob_average
+
+        Example:
+
+        >>> m = pytropic.MultiModel({"model1": pytropic.Model(size=3), "model2": pytropic.Model(size=3)})
+        >>> m.models["model1"].update("abc", 1000)
+        >>> m.models["model2"].update("abc", 1)
+        >>> m.models["model1"].update("def", 1)
+        >>> m.models["model2"].update("def", 1000)
+        >>> m.predict("abc")[0][0] # should return 'model1' first
+        'model1'
+        >>> m.predict("def")[0][0] # should return 'model2' first
+        'model2'
+
+        """
+        predicts = [
+            (model_name, m.predict(string)) for model_name, m in self.models.items()
+        ]
+        # do a non-destructive sort
+        sorted_predicts = sorted(predicts, key=lambda x: -x[1]["log_prob_average"])
+        return sorted_predicts
+
+    def entropy(self, string):
+        """
+        Public: Returns a sorted list of (model_name, entropy) for the string, sorted by entropy ascending
+
+        string: The String to predict
+
+        Returns: A list of tuples of the form (model_name, entropy), sorted by the entropy
+
+        """
+        predictions = self.predict(string)
+        return [
+            (model_name, -prediction["log_prob_average"])
+            for model_name, prediction in predictions
+        ]
+
+    def lowest_entropy_model(self, string):
+        """
+        Public: Returns the model name with the lowest entropy for the string
+
+        string: The String to predict
+
+        Returns: The String model name with the lowest entropy
+        """
+        entropies = self.entropy(string)
+        return entropies[0]
+
+    def differences(self, string):
+        """
+        Public: Returns a list of (difference, model_name_1, model_name_2) for the string for each pair of models
+        in a sorted entropy list
+
+        string: The String to predict
+
+        Returns: A list of tuples of the form (difference, model_name_1, model_name_2) for each pair of models
+        """
+        entropies = self.entropy(string)
+        pairs = zip(entropies, entropies[1:])
+        return [
+            (prev_entropy - entropy, model_name_1, model_name_2)
+            for (model_name_1, entropy), (model_name_2, prev_entropy) in pairs
+        ]
+
+    def difference(self, string):
+        """
+        Public: Returns the difference between the first two models in the sorted entropy list
+
+        string: The String to predict
+
+        Returns: The Float difference between the first two models in the sorted entropy list
+
+        """
+        return self.differences(string)[0]

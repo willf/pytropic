@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytropic"
-version = "1.0.0"
+version = "1.0.1"
 description = "Train and predict string entropy based on character n-grams"
 authors = ["Will Fitzgerald <37049+willf@users.noreply.github.com>"]
 license = "MIT License"
