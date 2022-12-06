@@ -1,6 +1,6 @@
 # Pytropic
 
-[![Python package](https://github.com/willf/pytropic/actions/workflows/test.yml/badge.svg)](https://github.com/willf/pytropic/actions/workflows/test.yml) [![PyPI version](https://badge.fury.io/py/pytropic.svg)](https://badge.fury.io/py/pytropic)
+[![PyPI version](https://badge.fury.io/py/pytropic.svg)](https://badge.fury.io/py/pytropic) [![Python package](https://github.com/willf/pytropic/actions/workflows/test.yml/badge.svg)](https://github.com/willf/pytropic/actions/workflows/test.yml)
 
 <img alt="An python with a lot of entropy" src="https://user-images.githubusercontent.com/37049/192400489-7a2fdc49-b29a-4299-a1c6-97c8b97b2eaf.png" width=150>
 
