@@ -78,6 +78,9 @@ class Model(object):
                         "ngram_size": self.size,
                         "ngram": key,
                         "count": value,
+                        "log_prob": self.log_prob(key),
+                        "entropy": -self.log_prob(key),
+                        "total": self.total,
                     }
                 )
                 + "\n"
